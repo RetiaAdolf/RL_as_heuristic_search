@@ -35,7 +35,8 @@ class Runner():
 			eps_return += reward
 
 			if bool_eval:
-				print("t: {}, action: {}".format(t, info['script']))
+				pass
+				#print("t: {}, action: {}".format(t, info['script']))
 			else:
 				self.total_timesteps += 1
 				if t % self.update_interval == 0:

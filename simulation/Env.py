@@ -14,7 +14,7 @@ __ouput_num__ = 4
 
 class CircuitEnv(object):
 	"""docstring for Env"""
-	def __init__(self, env_id=0):
+	def __init__(self, target_output, env_id=0):
 		super(CircuitEnv, self).__init__()
 
 
@@ -27,7 +27,7 @@ class CircuitEnv(object):
 		self.input_range = np.array([[12, 60], [12, 60], [0, 50]])
 		self.output_range = np.array([[28.31, 78.12], [-11.63, -0.33], [4.41, 178.46], [1.64, 16.92]])
 
-		self.target_output = None
+		self.target_output = np.array(target_output).round(2)
 		self.cur_input = None
 		self.cur_output = None
 		self.done = None
@@ -45,9 +45,7 @@ class CircuitEnv(object):
 
 	def reset(self):
 
-		target_output = [34.96, -1.17, 14.61, 13.44]
-
-		self.target_output = np.array(target_output).round(2)
+		self.target_output = self.target_output
 		self.cur_input = np.array([36, 36, 25])
 		self.cur_output = self.Sim.step(self.cur_input, self.env_id)
 		self.done = 0
