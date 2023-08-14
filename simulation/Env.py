@@ -102,6 +102,7 @@ class CircuitEnv(object):
 		state = self.__get_state__(self.cur_input, self.cur_output, self.target_output)
 		mask = self.get_action_mask()
 		reward, count = self.__get_reward__(self.cur_output, self.target_output)
+		info = {"script": "cur input: {}, cur ouput: {}, target output: {}, reward: {}".format(self.cur_input, self.cur_output, self.target_output, reward)}
 		
 		if count == 4 and self.done == 0:
 			self.done = 1
