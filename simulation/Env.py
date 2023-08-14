@@ -107,11 +107,4 @@ class CircuitEnv(object):
 		if count == 4 and self.done == 0:
 			self.done = 1
 
-		return state, mask, reward, self.done
-
-
-
-if __name__ == '__main__':
-	input_range = np.array([[12, 60], [12, 60], [0, 50]])
-	modified_action = np.array([11, 47, 36])
-	print(np.clip(modified_action, input_range[:, 0], input_range[:, 1]))
+		return state, mask, reward, self.done, info
