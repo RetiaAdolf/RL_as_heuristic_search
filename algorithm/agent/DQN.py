@@ -28,7 +28,7 @@ class DQNagent(object):
 		self.target_update_interval = 200
 
 		self.device = torch.device("cuda")
-		self.batch_size = 256
+		self.batch_size = 64
 		self.freeze_timesteps = 1000
 		self.buffer_size = 50000
         

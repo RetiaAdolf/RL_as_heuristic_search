@@ -30,7 +30,7 @@ env.reset()
 config['env_config']['action_space'] = env.get_action_space()
 config['env_config']['obs_space'] = env.get_obs_space()
 
-agent = SACagent(config=config)
+agent = DQNagent(config=config)
 runner = Runner(agent=agent, env=env, config=config)
 eps = 0
 while runner.total_timesteps < config['max_timesteps']:
