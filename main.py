@@ -1,6 +1,6 @@
 import sys
 import os
-from simulation import Env
+from simulation.Env import CircuitEnv
 from algorithm.agent import DQNagent, SACagent, MIACagent
 from runner import Runner
 import random
@@ -9,7 +9,7 @@ import numpy as np
 import torch
 
 config = {}
-config['seed'] = 3
+config['seed'] = 0
 config['max_timesteps'] = 1e7
 config['eval_interval'] = 20
 config['env_config'] = {}
@@ -25,12 +25,12 @@ random.seed(config['seed'])
 torch.manual_seed(config['seed'])
 logger = open("result_{}.txt".format(config['seed']), 'a')
 
-env = Env.CircuitEnv()
+env = CircuitEnv()
 env.reset()
 config['env_config']['action_space'] = env.get_action_space()
 config['env_config']['obs_space'] = env.get_obs_space()
 
-agent = MIACagent(config=config)
+agent = SACagent(config=config)
 runner = Runner(agent=agent, env=env, config=config)
 eps = 0
 while runner.total_timesteps < config['max_timesteps']:

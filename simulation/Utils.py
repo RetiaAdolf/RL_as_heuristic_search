@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import pickle
+import os
 def __normalization__(data, data_range):
 	data_min = data_range[:, 0]
 	data_max = data_range[:, 1]
@@ -21,7 +22,8 @@ class Simulator(object):
 	"""docstring for Simulator"""
 	def __init__(self):
 		super(Simulator, self).__init__()
-		with open('SimOutput.pickle', 'rb') as f:
+		__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+		with open(__location__ + '\\SimOutput.pickle', 'rb') as f:
 			self.data = pickle.load(f)
 
 	def step(self, action, env_id):

@@ -28,8 +28,8 @@ class DQNagent(object):
 		self.target_update_interval = 200
 
 		self.device = torch.device("cuda")
-		self.batch_size = 64
-		self.learning_start = 1000
+		self.batch_size = 256
+		self.freeze_timesteps = 1000
 		self.buffer_size = 50000
         
 		self.input_dim = self.config['env_config']['obs_space']
@@ -61,7 +61,7 @@ class DQNagent(object):
 			rand_action = rand_dist.sample()
 			if random.random() < self.eps:
 				action = rand_action
-		if t > self.learning_start:
+		if t > self.freeze_timesteps:
 			self.eps = max(self.eps * 0.9995, self.eps_min)
 		return action.detach().cpu().item()
 

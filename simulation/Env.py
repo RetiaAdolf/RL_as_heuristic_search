@@ -3,11 +3,10 @@ import numpy as np
 import copy
 import time
 import itertools
-from Utils import __normalization__
-from Utils import Simulator
+from .Utils import __normalization__
+from .Utils import Simulator
 import pickle
 
-from Agent import BC
 
 __input_num__ = 3
 __action_num__ = 3
@@ -16,7 +15,7 @@ __ouput_num__ = 4
 class CircuitEnv(object):
 	"""docstring for Env"""
 	def __init__(self, env_id=0):
-		super(Env, self).__init__()
+		super(CircuitEnv, self).__init__()
 
 
 		self.Sim = Simulator()

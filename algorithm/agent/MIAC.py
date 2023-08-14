@@ -30,7 +30,7 @@ class MIACagent(object):
 		self.target_update_interval = 200
 
 		self.device = torch.device("cuda")
-		self.batch_size = 64
+		self.batch_size = 256
 		self.freeze_timesteps = 1000
 		self.buffer_size = 50000
 		self.on_policy_buffer_size = self.batch_size
