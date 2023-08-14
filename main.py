@@ -43,3 +43,6 @@ while runner.total_timesteps < config['max_timesteps']:
 	eps += 1
 	if eps % config['eval_interval'] == 0:
 		runner.sample(bool_eval=True)
+	if "result" in info.keys():
+		print(info["result"])
+		exit()

@@ -16,6 +16,7 @@ class Runner():
 		eps_loss = [0]
 		eps_return = 0
 		obs, mask = self.env.reset()
+		runner_info = {}
 		for t in range(self.max_timesteps):
 			action = self.agent.sample_action(obs=obs, mask=mask, t=self.total_timesteps, bool_eval=bool_eval)
 			next_obs, next_mask, reward, done, info = self.env.step(action)
@@ -41,5 +42,8 @@ class Runner():
 					loss = self.agent.learn(self.total_timesteps)
 					eps_loss.append(loss)
 			if done:
+				runner_info['result'] = info['script']
 				break
-		return eps_data, {'return': eps_return, 'loss': np.mean(eps_loss)}
+		runner_info['return'] = eps_return
+		runner_info['loss'] = np.mean(eps_loss)
+		return eps_data, runner_info
