@@ -45,7 +45,7 @@ class CircuitEnv(object):
 
 	def reset(self):
 
-		target_output = [50.59, -3.60, 65.30, 7.63]
+		target_output = [34.96, -1.17, 14.61, 13.44]
 
 		self.target_output = np.array(target_output).round(2)
 		self.cur_input = np.array([36, 36, 25])
