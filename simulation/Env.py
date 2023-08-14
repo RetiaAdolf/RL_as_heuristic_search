@@ -78,10 +78,9 @@ class CircuitEnv(object):
 				reward -= element
 			else:
 				count += 1
-				reward -= element
 
 		if count == 4:
-			reward += 1
+			reward = 1
 
 		return reward, count
 
