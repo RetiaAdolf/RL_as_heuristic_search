@@ -42,7 +42,10 @@ while runner.total_timesteps < config['max_timesteps']:
 	logger.flush()
 	eps += 1
 	if eps % config['eval_interval'] == 0:
-		runner.sample(bool_eval=True)
+		_, eval_info = runner.sample(bool_eval=True)
+		if "result" in eval_info.keys():
+			print(eval_info["result"])
+			exit()
 	if "result" in info.keys():
 		print(info["result"])
 		exit()
