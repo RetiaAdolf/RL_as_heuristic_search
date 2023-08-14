@@ -1,0 +1,21 @@
+
+// Library name: surrogate_model
+// Cell name: gj_opa
+// View name: schematic
+M6 (OUT net6 0 0) nch w=120n l=40n m=1
+M4 (net6 net10 0 0) nch w=120n l=40n m=1
+M0 (net10 net10 0 0) nch w=120n l=40n m=1
+M7 (OUT net8 net_012 net_012) pch w=M7_W *10n l=40n m=1
+M5 (net8 net8 net_012 net_012) pch w=120n l=40n m=1
+M3 (net19 net8 net_012 net_012) pch w=M3_W * 10n l=40n m=1
+M2 (net6 IN net19 net19) pch w=120n l=40n m=1
+M1 (net10 net11 net19 net19) pch w=120n l=40n m=1
+R0 (OUT net16) resistor r=1K
+C0 (net6 net16) capacitor c=1p
+Vsupply (net_012 0) vsource dc=1.2 type=dc
+Vfb (OUT net11) vsource type=dc
+Ibias (net8 0) isource dc=10u type=dc
+Vstim (IN 0) vsource dc=In_offset type=pulse delay=1u edgetype=linear \
+        val0=In_offset-0.05m val1=In_offset+0.05m period=400u rise=100.0n \
+        fall=100.0n width=200u td01=1u td10=1u mag=1 isnoisy=yes \
+        noisetype=noisevoltage noiseinterp=linear noisevec=[ 1M 1 ]
