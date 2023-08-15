@@ -21,7 +21,7 @@ def __random_target__(target_range, output_type):
 class Simulator(object):
 	"""docstring for Simlator"""
 	def __init__(self):
-		super(Simlator, self).__init__()
+		super(Simulator, self).__init__()
 
 
 	def __run_command__(self, command, makefile_dir):
@@ -101,17 +101,15 @@ class Simulator(object):
 		M3_W = str(M3_W)
 		M7_W = str(M7_W)
 		IN_OFST = str(IN_OFST)
-		file_path = '../data/M3W_{}_M7W_{}_INOFST_{}.txt'.format(M3_W, M7_W, IN_OFST)
-		while not os.path.exists(file_path):
-			#command = "make -C /mnt/mydata/RL_{}/run/ M3_W={} M7_W={} IN_OFST={}".format(self.env_id, M3_W, M7_W, IN_OFST)
-			command = ["make", "M3_W={}".format(M3_W), "M7_W={}".format(M7_W), "IN_OFST={}".format(IN_OFST)]
-			makefile_dir = "/mnt/mydata/RL_{}/run/".format(env_id)
-			process = self.__run_command__(command,makefile_dir)
-			try:
-				process.wait(timeout=100)
-			except:
-				pgid = os.getpgid(process.pid)
-				os.killpg(pgid, signal.SIGTERM)
+		file_path = '/mnt/mydata/RL/run/data/M3W_{}_M7W_{}_INOFST_{}.txt'.format(M3_W, M7_W, IN_OFST)
+		command = ["make", "M3_W={}".format(M3_W), "M7_W={}".format(M7_W), "IN_OFST={}".format(IN_OFST)]
+		makefile_dir = "/mnt/mydata/RL_{}/run/".format(env_id)
+		process = self.__run_command__(command,makefile_dir)
+		try:
+			process.wait(timeout=100)
+		except:
+			pgid = os.getpgid(process.pid)
+			os.killpg(pgid, signal.SIGTERM)
 
 		data = self.__read_file__(file_path)
 		PowerDC, GBW, RmsNoise, SettlingTime = self.__read_data__(data)

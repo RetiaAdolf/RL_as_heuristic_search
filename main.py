@@ -53,6 +53,7 @@ class TopoEnv(object):
 		topo_lines += self.line_before
 		add_edges = self.actions[action]
 		for edge in add_edges:
+			print(edge)
 			topo_lines.append(edge + '\n')
 		topo_lines += self.line_after
 
@@ -66,12 +67,12 @@ if __name__ == '__main__':
 	topo = Env.step(rand_action)
 
 	env_id = 7
-	overwrite_path = '/mnt/mydata/RL_{}/run/simulation/surrogate_model/gj_opa/maestro/results/maestro/.tmpADEDir_root/surrogate_model:gj_opa:1/surrogate_model_gj_opa_schematic_spectre/netlist'.format(env_id)
+	overwrite_path = '/mnt/mydata/RL_{}/run/simulation/surrogate_model/gj_opa/maestro/results/maestro/.tmpADEDir_root/surrogate_model:gj_opa:1/surrogate_model_gj_opa_schematic_spectre/netlist/netlist'.format(env_id)
 	f = open(overwrite_path, 'w')
 	for line in topo:
 		f.write(line)
 	f.close()
 
 	Sim = Simulator()
-	output = Sim.reset([12,12,0], env_id)
+	output = Sim.step([12,12,0], env_id)
 	print(output)
