@@ -19,7 +19,7 @@ def search(target_output):
 	config['env_config']['task_name'] = 'cleantable'
 	config['env_config']['max_episode_length'] = 30
 	config['agent_config']['gamma'] = 0.99
-	config['agent_config']['update_interval'] = 5
+	config['agent_config']['update_interval'] = 3
 
 
 	np.random.seed(config['seed'])
@@ -31,7 +31,7 @@ def search(target_output):
 	config['env_config']['action_space'] = env.get_action_space()
 	config['env_config']['obs_space'] = env.get_obs_space()
 
-	agent = DQNagent(config=config)
+	agent = SACagent(config=config)
 	runner = Runner(agent=agent, env=env, config=config)
 	eps = 0
 	while runner.total_timesteps < config['max_timesteps']:
@@ -46,33 +46,36 @@ def search(target_output):
 			_, eval_info = runner.sample(bool_eval=True)
 			if "result" in eval_info.keys():
 				#print(eval_info["result"])
-				return runner.total_timesteps, eval_info["result"]
+				return runner.total_timesteps, env.get_nodes()
 		if "result" in info.keys():
 			#print(info["result"])
-			return runner.total_timesteps, info["result"]
+			return runner.total_timesteps, env.get_nodes()
+
+	return config['max_timesteps'], env.get_nodes()
 
 if __name__ == '__main__':
 	with open('./simulation/SimOutput.pickle', 'rb') as f:
 		dic = pickle.load(f)
 	logger = open("search_result.txt", 'a')
 	num = 0
-	total_t = 0
-	min_t = 9999999
-	max_t = -9999999
-	for key in dic.keys():
+	total_nodes = 0
+	min_nodes = 9999999
+	max_nodes = -9999999
+	for i,key in enumerate(dic.keys()):
 		output = dic[key]
-		t, result = search(output)
-		print("searched output: {}, used timesteps: {}, result: {}".format(output, t, result))
-		logger.write("searched output: {}, used timesteps: {}, result: {}".format(output, t, result))
-		logger.write("\n")
-		logger.flush()
+		if i % 500 == 0:
+			t, node = search(output)
+			print("searched output: {}, used timesteps: {}, result: {}".format(output, t, node))
+			logger.write("searched output: {}, used timesteps: {}, result: {}".format(output, t, node))
+			logger.write("\n")
+			logger.flush()
 
-		num += 1
-		total_t += t
-		min_t = min(t, min_t)
-		max_t = max(t, max_t)
+			num += 1
+			total_nodes += node
+			min_nodes = min(node, min_nodes)
+			max_nodes = max(node, max_nodes)
+			print("avg_nodes: {}, min_nodes: {}, max_nodes: {}".format(total_nodes * 1.0 / num, min_nodes, max_nodes))
 
-	print("avg_timesteps: {}, max_timesteps: {}, min_timesteps: {}".format(total_t * 1.0 / num, min_t, max_t))
-	logger.write("avg_timesteps: {}, max_timesteps: {}, min_timesteps: {}".format(total_t * 1.0 / num, min_t, max_t))
+	logger.write("avg_nodes: {}, min_nodes: {}, max_nodes: {}".format(total_nodes * 1.0 / num, min_nodes, max_nodes))
 	logger.write("\n")
 	logger.flush()

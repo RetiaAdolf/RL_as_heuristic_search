@@ -36,12 +36,14 @@ class CircuitEnv(object):
 	def get_action_space(self):
 		return self.action_dim
 
-
 	def get_obs_space(self):
 		return self.state_dim
 
 	def get_action_mask(self):
 		return np.ones(self.action_dim)
+
+	def get_nodes(self):
+		return self.Sim.get_nodes()
 
 	def reset(self):
 

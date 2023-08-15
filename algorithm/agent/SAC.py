@@ -21,7 +21,7 @@ class SACagent(object):
 
 		self.config = config
 
-		self.alpha = 0.1
+		self.alpha = 0.01
 		self.lr = 3e-4
 		self.gamma = config['agent_config']['gamma']
 		self.eps = 1.0

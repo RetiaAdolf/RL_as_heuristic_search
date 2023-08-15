@@ -23,12 +23,16 @@ class Simulator(object):
 	def __init__(self):
 		super(Simulator, self).__init__()
 		__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-		with open(__location__ + '\\SimOutput.pickle', 'rb') as f:
+		with open(__location__ + '/SimOutput.pickle', 'rb') as f:
 			self.data = pickle.load(f)
+		self.nodes = set()
 
 	def step(self, action, env_id):
 		M3_W, M7_W, IN_OFST = action
 		key = (M3_W, M7_W, IN_OFST)
+		self.nodes.add(key)
 		value = self.data[key]
 		return value
-		
+
+	def get_nodes(self):
+		return len(self.nodes)
